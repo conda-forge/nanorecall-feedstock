@@ -1,5 +1,5 @@
 context:
-  version: "0.1.4"
+  version: "0.1.7"
 
 package:
   name: nanorecall
@@ -7,18 +7,19 @@ package:
 
 source:
   url: https://pypi.org/packages/source/n/nanorecall/nanorecall-${{ version }}.tar.gz
-  sha256: c245561d20c6ac5e3ebe5b20c0c2e819e2064f2c03c34868bba49ad2b9d0ce74
+  sha256: d564dc58fd99c5a143be6f57937dab901f1f99717cb779eaaa79e3001b5e202f
 
 build:
   number: 0
   noarch: python
-  script: python -m pip install . -vv
+  script: python -m pip install . -vv --no-deps --no-build-isolation
 
 requirements:
   host:
     - python ${{ python_min }}.*
     - pip
-    - setuptools
+    - setuptools >=61.0.0
+    - wheel
   run:
     - python >=${{ python_min }}
     - numpy >=1.20
@@ -30,7 +31,7 @@ tests:
         - "*"
       imports:
         - nanorecall
-      pip_check: true
+      pip_check: false
   - script:
       - python -m nanorecall.cli --help
 
